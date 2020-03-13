@@ -7,11 +7,11 @@ import fr.imie.productmanager.utils.PersistenceManager;
 public class DaoFactory {
 
 	public static ProductDao getProductDao() {
-		return new JpaProductDao(PersistenceManager.getEntityManagerFactory());
+		return new JpaProductDao();
 	}
 	
 	public static CategoryDao getCategoryDao() {
-		return new JpaCategoryDao(PersistenceManager.getEntityManagerFactory());
+		return new JpaCategoryDao();
 	}
 	
 	private DaoFactory() {}

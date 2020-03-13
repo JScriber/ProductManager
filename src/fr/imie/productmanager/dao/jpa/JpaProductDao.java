@@ -10,13 +10,14 @@ import javax.persistence.Query;
 
 import fr.imie.productmanager.dao.ProductDao;
 import fr.imie.productmanager.entity.Product;
+import fr.imie.productmanager.utils.PersistenceManager;
 
 public class JpaProductDao implements ProductDao {
 	
 	private EntityManagerFactory emf;
 	
-	public JpaProductDao(final EntityManagerFactory emf) {
-		this.emf = emf;
+	public JpaProductDao() {
+		this.emf = PersistenceManager.getEntityManagerFactory();
 	}
 
 	@Override
@@ -25,10 +26,7 @@ public class JpaProductDao implements ProductDao {
 		Product product;
 
 		try {
-			final Query query = manager.createQuery("SELECT product FROM Product as product WHERE product.id = :id");
-			query.setParameter("id", id);
-
-			product = (Product) query.getSingleResult();
+			product = manager.find(Product.class, id);
 		} catch(Exception e) {
 			product = null;
 		}

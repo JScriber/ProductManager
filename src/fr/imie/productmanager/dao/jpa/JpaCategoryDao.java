@@ -10,13 +10,14 @@ import javax.persistence.Query;
 
 import fr.imie.productmanager.dao.CategoryDao;
 import fr.imie.productmanager.entity.Category;
+import fr.imie.productmanager.utils.PersistenceManager;
 
 public class JpaCategoryDao implements CategoryDao {
 
 	private EntityManagerFactory emf;
 	
-	public JpaCategoryDao(final EntityManagerFactory emf) {
-		this.emf = emf;
+	public JpaCategoryDao() {
+		this.emf = PersistenceManager.getEntityManagerFactory();
 	}
 
 	@Override
@@ -25,10 +26,7 @@ public class JpaCategoryDao implements CategoryDao {
 		Category category;
 
 		try {
-			final Query query = manager.createQuery("SELECT category FROM Category as category WHERE category.id = :id");
-			query.setParameter("id", id);
-
-			category = (Category) query.getSingleResult();
+			category = manager.find(Category.class, id);
 		} catch(Exception e) {
 			category = null;
 		}
