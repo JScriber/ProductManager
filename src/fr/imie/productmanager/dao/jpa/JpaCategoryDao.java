@@ -35,7 +35,7 @@ public class JpaCategoryDao implements CategoryDao {
 		
 		manager.close();
 
-		return Optional.of(category);
+		return Optional.ofNullable(category);
 	}
 
 	@SuppressWarnings("unchecked")

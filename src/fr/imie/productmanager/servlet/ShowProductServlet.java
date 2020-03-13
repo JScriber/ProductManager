@@ -31,15 +31,21 @@ public class ShowProductServlet extends HttpServlet {
 					req.setAttribute("product", product.get()); 
 			        req.getRequestDispatcher("showProduct.jsp").forward(req, resp); 
 				} else {
-					writer.print(String.format("There's no product with the ID %d", id));
+					this.showError(req, resp, String.format("There's no product with the ID %d", id));
 				}
 			} catch (NumberFormatException e) {
-				writer.print("Your ID sucks.");
+				this.showError(req, resp, "Your ID must be a number.");
 			}
 		} else {
-			writer.print("You must pass an ID.");
+			this.showError(req, resp, "You must pass an ID.");
 		}
 		
 		writer.close();
 	}
+	
+	private void showError(HttpServletRequest req, HttpServletResponse resp, String message) throws ServletException, IOException {
+		req.setAttribute("errorMessage", message);
+        req.getRequestDispatcher("error").forward(req, resp); 
+	}
+	
 }

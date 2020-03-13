@@ -35,7 +35,7 @@ public class JpaProductDao implements ProductDao {
 		
 		manager.close();
 
-		return Optional.of(product);
+		return Optional.ofNullable(product);
 	}
 
 	@SuppressWarnings("unchecked")

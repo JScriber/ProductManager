@@ -1,7 +1,6 @@
 package fr.imie.productmanager.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +17,6 @@ public class DeleteProductServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String rawId = req.getParameter("id");
-		final PrintWriter writer = resp.getWriter();
 		
 		if (rawId != null) {
 			try {
@@ -26,14 +24,9 @@ public class DeleteProductServlet extends HttpServlet {
 				
 				DaoFactory.getProductDao().deleteById(id);
 				
-		        resp.sendRedirect(req.getContextPath() + "/listProduct");
-			} catch (NumberFormatException e) {
-				writer.print("Your ID sucks.");
-			}
-		} else {
-			writer.print("You must pass an ID.");
+			} catch (NumberFormatException e) {}
 		}
-		
-		writer.close();
+
+        resp.sendRedirect(req.getContextPath() + "/listProduct");
 	}
 }
