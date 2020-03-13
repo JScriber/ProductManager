@@ -21,50 +21,57 @@
 			  </div>
 	
 			  <div class="card-body">
-				<form action="" method="POST">
-				  <div class="form-group">
-				    <label for="name">		
-						<fmt:message key="add_product.name"/>
-					</label>
+			  
+			  	<c:if test="${requestScope.categories.size() > 0}">
+				  	<form action="" method="POST">
+					  <div class="form-group">
+					    <label for="name">		
+							<fmt:message key="add_product.name"/>
+						</label>
+		
+						<input class="form-control" type="text" name="name" id="name" required/>
+					  </div>
 	
-					<input class="form-control" type="text" name="name" id="name" required/>
-				  </div>
+					  <div class="form-group">
+					    <label for="description">		
+							<fmt:message key="add_product.description"/>
+						</label>
+		
+						<textarea class="form-control" name="description" id="description" required></textarea>
+					  </div>
+					  
+					  <div class="form-group">
+					  	<label for="price">		
+							<fmt:message key="add_product.price"/>
+						</label>
+		
+						<input class="form-control" type="number" name="price" id="price" required/>
+					  </div>
+					  
+					  
+					  <div class="form-group">
+					  	<label for="category">
+					  		<fmt:message key="add_product.category"/>
+					  	</label>
+					  	
+						<select id="category" name="category" class="form-control">
+							<c:forEach items="${requestScope.categories}" var="category">
+								<option value="${category.id}" selected>
+									${category.name}
+								</option>
+							</c:forEach>
+						</select>
+					  </div>
+	
+					  <button type="submit" class="btn btn-primary">
+					  	<fmt:message key="add_product.submit"/>
+					  </button>
+					</form>
+			  	</c:if>
 
-				  <div class="form-group">
-				    <label for="description">		
-						<fmt:message key="add_product.description"/>
-					</label>
-	
-					<textarea class="form-control" name="description" id="description" required></textarea>
-				  </div>
-				  
-				  <div class="form-group">
-				  	<label for="price">		
-						<fmt:message key="add_product.price"/>
-					</label>
-	
-					<input class="form-control" type="number" name="price" id="price" required/>
-				  </div>
-				  
-				  
-				  <div class="form-group">
-				  	<label for="category">
-				  		<fmt:message key="add_product.category"/>
-				  	</label>
-				  	
-					<select id="category" name="category" class="form-control">
-						<c:forEach items="${requestScope.categories}" var="category">
-							<option value="${category.id}" selected>
-								${category.name}
-							</option>
-						</c:forEach>
-					</select>
-				  </div>
-
-				  <button type="submit" class="btn btn-primary">
-				  	<fmt:message key="add_product.submit"/>
-				  </button>
-				</form>
+				<c:if test="${requestScope.categories.size() == 0}">
+					<p><fmt:message key="add_product.add_category_before"/></p>
+				</c:if>
 			</div>
 		</div>
 
