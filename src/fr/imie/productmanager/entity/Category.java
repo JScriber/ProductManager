@@ -10,8 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlList;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +27,11 @@ public class Category implements Serializable {
 	
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+	/**
+	 * Fetch strategy set to {@link FetchType.Eager} for the REST part.
+	 * Indeed, we need to load everything at once as the JAX marshaller won't tell Hibernate to load each product.
+	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
 	private List<Product> products = new ArrayList<>();
 	
 	public Category() {

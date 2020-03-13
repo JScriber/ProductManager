@@ -6,8 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlRootElement
+@XmlType(propOrder={ "id", "name", "description", "price", "categoryId" })
 public class Product {
 
 	@Id
@@ -60,6 +66,28 @@ public class Product {
 		this.price = price;
 	}
 	
+	/**
+	 * Hack to display the category ID.
+	 * @return the ID of the {@link Product#getCategory() category}.
+	 */
+	@XmlElement(name = "category")
+	public Long getCategoryId() {
+		Long id;
+		
+		if (this.getCategory() != null) {
+			id = this.getCategory().getId();
+		} else {
+			id = null;
+		}
+		
+		return id;
+	}
+
+	/**
+	 * Mark as transient to prevent endless loop.
+	 * @return
+	 */
+	@XmlTransient
 	public Category getCategory() {
 		return category;
 	}

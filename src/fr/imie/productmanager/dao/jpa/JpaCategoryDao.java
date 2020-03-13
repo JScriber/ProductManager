@@ -75,5 +75,23 @@ public class JpaCategoryDao implements CategoryDao {
 			manager.close();
 		}
 	}
+	
+	@Override
+	public void merge(final Category category) {
+		final EntityManager manager = this.emf.createEntityManager();
+		final EntityTransaction transaction = manager.getTransaction();
+
+		try {
+			transaction.begin();
+			manager.merge(category);
+			transaction.commit();
+		} finally {
+			if (transaction.isActive()) {
+				transaction.rollback();
+			}
+
+			manager.close();
+		}
+	}
 
 }

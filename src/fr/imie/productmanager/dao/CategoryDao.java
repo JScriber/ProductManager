@@ -13,4 +13,6 @@ public interface CategoryDao {
 
 	void persist(Category category);
 	
+	void merge(Category category);
+	
 }

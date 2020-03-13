@@ -10,7 +10,7 @@ import fr.imie.productmanager.utils.PersistenceManager;
 public class PersistenceAppListener implements ServletContextListener {
 
 	public void contextInitialized(final ServletContextEvent event){
-		// Nothing.
+		PersistenceManager.getEntityManagerFactory();
 	}
 
 	public void contextDestroyed(final ServletContextEvent evt) {
